@@ -1,4 +1,4 @@
-# SQEDT:a Html VisualEditor
+# SQEDT : a Html VisualEditor
 
 this is my first Html Component
 
