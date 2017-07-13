@@ -49,6 +49,7 @@ let SQEdt = function (options) {
     });
 
     this.el.addEventListener('input', function (e) {
+        console.log(e);
         if (e.target.innerText.length === 0) {
             e.target.innerHTML = '<div class="line"><span><br></span></div>'
         }

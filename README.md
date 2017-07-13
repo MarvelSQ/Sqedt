@@ -13,8 +13,21 @@ this is my first Html Component
 
 more function will be added
 
+### Use
 
-### Learing
+***
+
+```html
+<div id="editor"></div>
+<script src="sqedt/sqedt.js"></script>
+<script>
+    let editor = document.getElementById('editor');
+    let myEdt = new SQEdt({el:editor});
+</script>
+```
+
+
+### Learning
 
 ***
 
