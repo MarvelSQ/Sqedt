@@ -12,8 +12,8 @@
 <body>
 <div id="editor" class="editor"></div>
 <button onclick="myedt.bold()"><b>Bold</b></button>
-<button onclick="myedt.italy()"><i>Italy</i></button>
-<button onclick="myedt.slash()"><s>Slash</s></button>
+<button onclick="myedt.italic()"><i>Italy</i></button>
+<button onclick="myedt.strike()"><s>Slash</s></button>
 <select id="font">
     <option>12</option>
     <option>14</option>
@@ -33,23 +33,23 @@
 <div id="editor1" class="editor"></div>
 <script src="sqedt/sqedt.js"></script>
 <script>
-    const editor = document.getElementById('editor')
-    const fontChanger = document.getElementById('font')
-    const colorChanger = document.getElementById('color')
-    const myedt = new SQEdt({el:editor})
+    const editor = document.getElementById('editor');
+    const fontChanger = document.getElementById('font');
+    const colorChanger = document.getElementById('color');
+    const myedt = new SQEdt({el:editor});
 
-    const editor1 = document.getElementById('editor1')
-    const myedt1= new SQEdt({el:editor1})
+    const editor1 = document.getElementById('editor1');
+    const myedt1= new SQEdt({el:editor1});
     fontChanger.addEventListener('change',function (e) {
-        console.log(e)
-        console.log(this.value)
-        myedt.changeTag({font:Number(this.value)})
-    })
+        console.log(e);
+        console.log(this.value);
+        myedt.changeTag({font:Number(this.value)});
+    });
     colorChanger.addEventListener('change',function (e) {
-        console.log(e)
-        console.log(this.value)
-        myedt.changeTag({color:this.value})
-    })
+        console.log(e);
+        console.log(this.value);
+        myedt.changeTag({color:this.value});
+    });
 </script>
 </body>
 </html>

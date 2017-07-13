@@ -482,10 +482,10 @@ SQEdt.prototype = {
     bold: function () {
         this.changeTag({tag: 'b'})
     },
-    italy: function () {
+    italic: function () {
         this.changeTag({tag: 'i'})
     },
-    slash: function () {
+    strike: function () {
         this.changeTag({tag: 's'})
     },
     bigger: function () {

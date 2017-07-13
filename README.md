@@ -13,16 +13,41 @@ this is my first Html Component
 
 more function will be added
 
-### Use
+### Get Start
 
 ***
 
 ```html
 <div id="editor"></div>
+<button onclick="myEdt.bold()"><b>Bold</b></button>
+<button onclick="myEdt.italic()"><i>Italy</i></button>
+<button onclick="myEdt.strike()"><s>Slash</s></button>
+<select id="font">
+    <option>12</option>
+    <option>14</option>
+    <option selected>16</option>
+    <option>18</option>
+    <option>20</option>
+</select>
+<button onclick="myEdt.bigger()">A+</button>
+<button onclick="myEdt.smaller()">A-</button>
+<select id="color">
+    <option value="#ff0000">red</option>
+    <option value="#0000ff">blue</option>
+    <option value="#00ff00">green</option>
+    <option value="#000000">black</option>
+    <option value="#888888">grey</option>
+</select>
 <script src="sqedt/sqedt.js"></script>
 <script>
     let editor = document.getElementById('editor');
     let myEdt = new SQEdt({el:editor});
+    fontChanger.addEventListener('change',function (e) {
+        myEdt.changeTag({font:Number(this.value)})
+    });
+    colorChanger.addEventListener('change',function (e) {
+        myEdt.changeTag({color:this.value});
+    })
 </script>
 ```
 
