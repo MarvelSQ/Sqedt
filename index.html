@@ -10,7 +10,7 @@
     </style>
 </head>
 <body>
-<div id="editor" class="editor"></div>
+<div id="editor-m" class="editor"></div>
 <button onclick="myedt.bold()"><b>Bold</b></button>
 <button onclick="myedt.italic()"><i>Italy</i></button>
 <button onclick="myedt.strike()"><s>Slash</s></button>
@@ -30,16 +30,12 @@
     <option value="#000000">black</option>
     <option value="#888888">grey</option>
 </select>
-<div id="editor1" class="editor"></div>
 <script src="sqedt/sqedt.js"></script>
 <script>
-    const editor = document.getElementById('editor');
+    const editor = document.getElementById('editor-m');
     const fontChanger = document.getElementById('font');
     const colorChanger = document.getElementById('color');
     const myedt = new SQEdt({el:editor});
-
-    const editor1 = document.getElementById('editor1');
-    const myedt1= new SQEdt({el:editor1});
     fontChanger.addEventListener('change',function (e) {
         console.log(e);
         console.log(this.value);
