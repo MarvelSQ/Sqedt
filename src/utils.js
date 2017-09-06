@@ -217,6 +217,40 @@ const isSame = function(obj, foo) {
   }
 }
 
+/**
+ * wrap content with ele.parentNode til the div.para element.
+ * @param  {Node} ele     document's node
+ * @param  {Node} content node to be wraped
+ * @return {Node}         wrapedSpanElement or undefined
+ */
+const wrapParent = (reg,ele, content) => {
+  let [match,name] = judgeStart(reg);
+  let found = undefined;
+  let proxy = ele;
+  let tmp;
+  if (content) {
+    tmp = content;
+  } else {
+    tmp = ele.cloneNode(true);
+  }
+  while (!found) {
+    if (match(proxy, name)) {
+      found = proxy.cloneNode(false);
+      found.appendChild(tmp);
+    } else if (match(proxy, name)) {
+      return;
+    } else {
+      if (proxy.nodeName != '#text') {
+        let tp = proxy.cloneNode(false);
+        tp.appendChild(tmp);
+        tmp = tp;
+      }
+      proxy = proxy.parentNode;
+    }
+  }
+  return found;
+}
+
 module.exports= {
   isAllElements,
   matchById,
@@ -228,5 +262,6 @@ module.exports= {
   removeTag,
   addTagInPara,
   removeTagInPara,
-  isSame
+  isSame,
+  wrapParentPara,
 }
