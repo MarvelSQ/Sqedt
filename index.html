@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>sqedt-home</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      text-align: center;
+    }
+
+    #app {
+      height: 100%;
+      position: relative;
+    }
+
+    #app {
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    #wrap {
+      position: absolute;
+      z-index: 2;
+      bottom: 50%;
+      left: 50%;
+      min-width: 1000px;
+      margin-left: -500px;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    p {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-group {}
+
+    .btn {
+      display: inline-block;
+      margin: 0 10px;
+      height: 24px;
+      width: 120px;
+      line-height: 24px;
+    }
+
+    .btn {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      padding: 12px 0;
+      background-color: #1DACE8;
+      font-size: 20px;
+    }
+
+    .round {
+      border-radius: 40px;
+    }
+
+    .btn.border {
+      color: #1DACE8;
+      background-color: transparent;
+      border: 1px solid #1DACE8;
+    }
+
+    .btn.solid {
+      color: #fff;
+      background-color: #1DACE8;
+    }
+
+    .btn.border:hover {
+      color: #1A9BD1;
+    }
+
+    .btn.solid:hover {
+      border-color: #1A9BD1;
+      background-color: #1A9BD1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="wrap">
+      <h1>SQEdt:a html editor</h1>
+      <p>this is just a start!</p>
+      <div class="btn-group">
+        <a class="btn round solid" href="https://github.com/MarvelSQ/Sqedt/">code</a>
+        <a class="btn round border" href="https://github.com/MarvelSQ/Sqedt/issues">issue</a>
+      </div>
+    </div>
+    <canvas id="shape"></canvas>
+  </div>
+  <!-- built files will be auto injected -->
+</body>
+<script type="text/javascript">
+  document.addEventListener('touchmove', function(e) {
+    e.preventDefault()
+  })
+  var c = document.getElementsByTagName('canvas')[0],
+    x = c.getContext('2d'),
+    pr = window.devicePixelRatio || 1,
+    w = window.innerWidth,
+    h = window.innerHeight,
+    f = 90,
+    q,
+    m = Math,
+    r = 0,
+    u = m.PI * 2,
+    v = m.cos,
+    z = m.random
+  c.width = w * pr
+  c.height = h * pr
+  x.scale(pr, pr)
+  x.globalAlpha = 0.6
+
+  function drwKnife(i) {
+    let rand = Math.floor(Math.random() * 150 + 80);
+    console.log(rand);
+    x.beginPath();
+    x.moveTo((w / 21) * i, h);
+    x.lineTo((w / 21) * i, h - rand);
+    x.lineTo((w / 21) * (i + 2), h - rand - 20);
+    x.lineTo((w / 21) * (i + 2), h);
+    x.closePath();
+    r -= u / -50;
+    x.fillStyle = '#' + (v(r) * 127 + 128 << 16 | v(r + u / 3) * 127 + 128 << 8 | v(r + u / 3 * 2) * 127 + 128).toString(16);
+    x.fill();
+  }
+
+  function drwBack() {
+    x.clearRect(0, 0, w, h);
+    for (let index = 0; index < 20; index++) {
+      drwKnife(index);
+    }
+  }
+  document.onclick = drwBack
+  drwBack();
+</script>
+
+</html>
