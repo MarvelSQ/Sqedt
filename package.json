@@ -1,6 +1,6 @@
 {
   "name": "sqedt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a html editor based on contentEditable",
   "main": "index.js",
   "scripts": {
