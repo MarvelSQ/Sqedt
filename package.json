@@ -1,0 +1,24 @@
+{
+  "name": "sqedt",
+  "version": "0.0.1",
+  "description": "a html editor based on contentEditable",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarvelSQ/Sqedt.git"
+  },
+  "keywords": [
+    "html",
+    "javascript",
+    "editor"
+  ],
+  "author": "sunqiang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarvelSQ/Sqedt/issues"
+  },
+  "homepage": "https://github.com/MarvelSQ/Sqedt#readme"
+}
