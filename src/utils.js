@@ -7,7 +7,7 @@
 const isAllElements = (type, el) => {
   if (el.innerText !== '') {
     let elc = el.cloneNode(true)
-    let array = elc.querySelectorAll(type)
+    let array = [...elc.querySelectorAll(type)]
     for (let cell of array) {
       cell.remove();
     }
@@ -196,25 +196,28 @@ const removeTagInPara = function(tag, collection) {
   // }
 }
 
-const isSame = function(obj, foo) {
+/**
+ * compare obj & foo is equal
+ * @param  {Object} obj [description]
+ * @param  {Object} foo [description]
+ * @return {Boolean}     [description]
+ */
+const isEqual = function(obj, foo) {
   let result = false;
-  let oarr,
-    farr;
-  oarr = Object.keys(obj).sort();
-  farr = Object.keys(foo).sort();
+  let oarr = Object.keys(obj).sort(),
+    farr = Object.keys(foo).sort();
   if (oarr.toString() == farr.toString()) {
     result = true;
-    for (let key of oarr) {
+    oarr.forEach(key => {
       if (typeof obj[key] == 'object') {
-        result = isSame(obj[key], foo[key]) && result;
+        result = isEqual(obj[key], foo[key]) && result;
       } else {
         result = (obj[key] == foo[key]) && result;
       }
-    }
+    })
     return result;
-  } else {
-    return false;
   }
+  return result;
 }
 
 /**
@@ -223,7 +226,7 @@ const isSame = function(obj, foo) {
  * @param  {Node} content node to be wraped
  * @return {Node}         wrapedSpanElement or undefined
  */
-const wrapParent = (reg,ele, content) => {
+const wrapParent = (reg, ele, content) => {
   let [match,name] = judgeStart(reg);
   let found = undefined;
   let proxy = ele;
@@ -251,7 +254,18 @@ const wrapParent = (reg,ele, content) => {
   return found;
 }
 
-module.exports= {
+const getChildrenStyle = (type, el) => {
+  let spans = el.childNodes;
+  let arr = [];
+  if (spans && spans.length > 0) {
+    [...spans].forEach(c => {
+      arr.push(c.style[type])
+    })
+  }
+  return arr;
+}
+
+module.exports = {
   isAllElements,
   matchById,
   matchByTag,
@@ -262,6 +276,7 @@ module.exports= {
   removeTag,
   addTagInPara,
   removeTagInPara,
-  isSame,
-  wrapParentPara,
+  isEqual,
+  wrapParent,
+  getChildrenStyle
 }
