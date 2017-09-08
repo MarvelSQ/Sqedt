@@ -4,8 +4,13 @@
   "description": "a html editor based on contentEditable",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "build": "babel src -d lib",
     "prepublish": "npm run build"
+=======
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib&&webpack pac.js dist/bundle.js"
+>>>>>>> feature-Demo
   },
   "repository": {
     "type": "git",
