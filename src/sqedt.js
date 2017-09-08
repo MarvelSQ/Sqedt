@@ -26,4 +26,8 @@ const SQEdt=(el,option)=>{
   return edt;
 }
 
+Edt.prototype.insertNode(){
+  
+}
+
 module.exports = SQEdt;
