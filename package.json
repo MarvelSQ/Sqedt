@@ -1,6 +1,6 @@
 {
   "name": "sqedt",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a html editor based on contentEditable",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/MarvelSQ/Sqedt/issues"
   },
-  "homepage": "https://github.com/MarvelSQ/Sqedt#readme",
+  "homepage": "https://marvelsq.github.io/Sqedt",
   "dependencies": {
     "babel-preset-es2015": "^6.24.1"
   }
