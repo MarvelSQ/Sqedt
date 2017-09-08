@@ -37,10 +37,13 @@ const SQEdt=(el,option)=>{
     if (e.keyCode === 8) {
       if (sl.isCollapsed) {
         let para = utils.getParent(sl.anchorNode, '.para');
-        if (para && para.innerHTML === '<br>' && e.keyCode === 8) {
+        if (para && para.innerHTML === '<br>') {
           para.innerHTML = '<span style="font-size:16px;color:#212121"><br></span>';
           sl.getRangeAt(0).selectNode(para.firstElementChild)
         }
+      }
+      if(el.innerHTML === ''){
+        el.innerHTML = '<div class="para" style="text-align:left"><span style="font-size:16px;color:#212121"><br></span></div>'
       }
     }
   })
