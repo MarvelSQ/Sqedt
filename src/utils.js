@@ -240,7 +240,7 @@ const wrapParent = (reg, ele, content) => {
     if (match(proxy, name)) {
       found = proxy.cloneNode(false);
       found.appendChild(tmp);
-    } else if (match(proxy, name)) {
+    } else if (proxy.nodeName == "BODY") {
       return;
     } else {
       if (proxy.nodeName != '#text') {
@@ -265,6 +265,23 @@ const getChildrenStyle = (type, el) => {
   return arr;
 }
 
+const getParent = (ele, reg) => {
+  let [match,
+    name] = judgeStart(reg)
+  let found = undefined;
+  let proxy = ele;
+  while (!found) {
+    if (match(proxy, name)) {
+      found = proxy;
+    } else if (proxy.nodeName == 'BODY') {
+      return;
+    } else {
+      proxy = proxy.parentNode
+    }
+  }
+  return found;
+}
+
 module.exports = {
   isAllElements,
   matchById,
@@ -278,5 +295,6 @@ module.exports = {
   removeTagInPara,
   isEqual,
   wrapParent,
-  getChildrenStyle
+  getChildrenStyle,
+  getParent
 }
