@@ -10,6 +10,7 @@
    this.size = new Set();
    this.justify = new Set();
    this.color = new Set();
+   this.textNum = 0;
  }
 
  SlState.prototype.export = function() {
@@ -24,6 +25,7 @@
      sizes: Array.from(this.size),
      colors: Array.from(this.color),
      justifys: Array.from(this.justify),
+     textNum:this.textNum;
      toString() {
        let str = '';
        Object.keys(this).forEach(key => {
