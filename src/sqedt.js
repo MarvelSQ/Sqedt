@@ -13,6 +13,7 @@ function Edt(config) {
   this.callbackInChange = (s) => {
     console.log('default callbackInChange');
   };
+  this.slState = new state().export();
 }
 
 Edt.prototype.addCallback = function(cb){
@@ -37,7 +38,7 @@ const SQEdt=(el,option)=>{
       if (sl.isCollapsed) {
         let para = utils.getParent(sl.anchorNode, '.para');
         if (para && para.innerHTML === '<br>' && e.keyCode === 8) {
-          para.innerHTML = '<span style="font-size:16px;"><br></span>';
+          para.innerHTML = '<span style="font-size:16px;color:#212121"><br></span>';
           sl.getRangeAt(0).selectNode(para.firstElementChild)
         }
       }
@@ -49,6 +50,9 @@ const SQEdt=(el,option)=>{
     if (document.activeElement === el) { //judge the cursor in the el
       let state = selectEvent(window.getSelection());
       let same = utils.isEqual(edt.slState, state);
+      console.log(same);
+      console.log(state.toString());
+      console.log(edt.slState.toString());
       if (!same) {
         edt.slState = state;
         edt.callbackInChange(state, e); //call the callback to subscriber
@@ -71,6 +75,10 @@ const SQEdt=(el,option)=>{
     e.returnValue = false;
     return false;
   })
+
+  el.contentEditable =true;
+
+  el.style.textAlign = 'left';
 
   return edt;
 }

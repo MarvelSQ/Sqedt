@@ -54,10 +54,10 @@ const handleSelection = selection => {
       : align);
   } else {
     results.forEach(cell => {
-      state.b = state.b && util.isAllElements('b', cell);
-      state.u = state.u && util.isAllElements('u', cell);
-      state.i = state.i && util.isAllElements('i', cell);
-      state.d = state.d && util.isAllElements('del', cell);
+      state.b = state.b && utils.isAllElements('b', cell);
+      state.u = state.u && utils.isAllElements('u', cell);
+      state.i = state.i && utils.isAllElements('i', cell);
+      state.d = state.d && utils.isAllElements('del', cell);
       utils.getChildrenStyle('fontSize', cell).forEach(n => {
         let i = Number(n.replace('px', ''));
         state.size.add(i === 0
