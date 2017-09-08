@@ -20,6 +20,8 @@
     #app {
       height: 100%;
       position: relative;
+      z-index: 2;
+      box-sizing: border-box;
     }
 
     #app {
@@ -28,16 +30,11 @@
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
       color: #2c3e50;
+      padding-top: 5%;
+      overflow-y: scroll;
     }
 
-    #wrap {
-      position: absolute;
-      z-index: 2;
-      bottom: 50%;
-      left: 50%;
-      min-width: 1000px;
-      margin-left: -500px;
-    }
+    #wrap {}
 
     canvas {
       position: absolute;
@@ -102,6 +99,138 @@
       border-color: #1A9BD1;
       background-color: #1A9BD1;
     }
+
+    .page {
+      margin-top: 50px;
+      margin-bottom: 5%;
+      background-color: #fff;
+      box-shadow: 0 1px 3px #ccc;
+      min-height: 200px;
+      border-radius: 1px;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    #edt {
+      min-height: 50px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      .page {
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media screen and (max-width: 1023px) {
+      .page {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+    }
+  </style>
+  <style>
+    .toolbar {
+      margin-bottom: 10px;
+    }
+
+    .toolbar>.tool-group {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .left{
+      float: left;
+    }
+
+    .right{
+      float: right;
+    }
+
+    .tool-btn {
+      box-sizing: border-box;
+      font-size: 20px;
+      border: none;
+      padding: 2px;
+      display: inline-block;
+      min-width: 20px;
+      border-radius: 2px;
+    }
+
+    .tool-input{
+      text-align: center;
+      width: 40px;
+      font-size: 20px;
+      border: none;
+      border-bottom: 1px solid #212121;
+    }
+
+    .tool-input:focus{
+      outline: none;
+    }
+
+    .sp.active,
+    .sp:hover {
+      background-color: #ccc;
+    }
+
+    .sp {
+      background-color: #fff;
+    }
+
+    .color {
+      box-shadow: 0 1px 2px #888;
+      border: 1px solid transparent;
+      padding: 1px;
+    }
+
+    .color.active,
+    .color:hover {
+      border: 1px solid #bbb;
+    }
+
+    .red {
+      background-color: #E54343;
+      color: #E54343;
+    }
+
+    .black {
+      background-color: #212121;
+      color: #212121;
+    }
+
+    .yellow {
+      background-color: #EBE74E;
+      color: #EBE74E;
+    }
+
+    .green {
+      background-color: #40B883;
+      color: #40B883;
+    }
+
+    .blue {
+      background-color: #23B6EA;
+      color: #23B6EA;
+    }
+
+    .white {
+      background-color: #fff;
+      color: #fff;
+    }
+  </style>
+  <style>
+  .para{
+    border-bottom: 1px solid #ccc;
+  }
+  #edt{
+    border: 1px solid #888;
+    padding: 10px;
+  }
+  #edt:focus{
+    outline: none;
+  }
   </style>
 </head>
 
@@ -115,10 +244,47 @@
         <a class="btn round border" href="https://github.com/MarvelSQ/Sqedt/issues">issue</a>
       </div>
     </div>
-    <canvas id="shape"></canvas>
+    <div id="edt-wrap" class="page">
+      <div class="toolbar">
+        <span class="tool-group">
+          <button class="tool-btn sp" title="bold"><b>B</b></button>
+          <button class="tool-btn sp" title="italic"><i>I</i></button>
+          <button class="tool-btn sp" title="underline"><u>U</u></button>
+          <button class="tool-btn sp" title="deleteline"><del>D</del></button>
+        </span>
+        <span class="tool-group">
+          <button class="tool-btn color white" title="white">R</button>
+          <button class="tool-btn color black" title="black">R</button>
+          <button class="tool-btn color red" title="red">R</button>
+          <button class="tool-btn color yellow" title="yellow">R</button>
+          <button class="tool-btn color blue" title="blue">R</button>
+          <button class="tool-btn color green" title="green">R</button>
+        </span>
+        <span class="tool-group">
+          <button class="tool-btn sp" title="Align Left"><b>|=  |</b></button>
+          <button class="tool-btn sp" title="Center Align"><b>| = |</b></button>
+          <button class="tool-btn sp" title="Align Right"><b>|  =|</b></button>
+          <button class="tool-btn sp" title="Justify Align"><b>|==|</b></button>
+        </span>
+        <span class="tool-group">
+          <button class="tool-btn sp" title="increase"><b>A+</b></button>
+          <button class="tool-btn sp" title="decrease"><b>A-</b></button>
+          <input class="tool-input">
+        </span>
+      </div>
+      <div id="edt"></div>
+      <div class="subtool">
+        <span class="tool-group right">
+          <label>textNum:</label>
+          <span>0</span>
+        </span>
+      </div>
+    </div>
   </div>
+  <canvas id="shape"></canvas>
   <!-- built files will be auto injected -->
 </body>
+<script src="dist/bundle.js"></script>
 <script type="text/javascript">
   document.addEventListener('touchmove', function(e) {
     e.preventDefault()
@@ -142,7 +308,6 @@
 
   function drwKnife(i) {
     let rand = Math.floor(Math.random() * 150 + 80);
-    console.log(rand);
     x.beginPath();
     x.moveTo((w / 21) * i, h);
     x.lineTo((w / 21) * i, h - rand);
@@ -160,7 +325,6 @@
       drwKnife(index);
     }
   }
-  document.onclick = drwBack
   drwBack();
 </script>
 
