@@ -15,6 +15,10 @@ function Edt(config) {
   };
 }
 
+Edt.prototype.addCallback = function(cb){
+  this.callbackInChange=cb;
+}
+
 const createInstance = config => new Edt(config);
 
 const SQEdt=(el,option)=>{
