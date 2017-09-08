@@ -25,7 +25,7 @@
      sizes: Array.from(this.size),
      colors: Array.from(this.color),
      justifys: Array.from(this.justify),
-     textNum:this.textNum;
+     textNum:this.textNum,
      toString() {
        let str = '';
        Object.keys(this).forEach(key => {

@@ -15,10 +15,10 @@ var codeMap = {
 }
 
 var btnMap = {
-  00:'allB',
-  01:'allI',
-  02:'allU',
-  03:'allD'
+  '00':'allB',
+  '01':'allI',
+  '02':'allU',
+  '03':'allD'
 }
 
 var colors = []
@@ -43,7 +43,7 @@ function changeTagState(id,el) {
   var key = codeMap[id]
   return function() {
     var btn = el;
-    slState[key]= !slState[]
+    slState[key]= !slState[key]
   }
 }
 
