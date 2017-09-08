@@ -2,7 +2,7 @@ const utils = require('./utils')
 const State = require('./SelectState')
 
 function SelectEvent(selection) {
-  return handleSelection(selection);
+  return handleSelection(selection).export();
 }
 
 const handleSelection = selection => {

@@ -31,8 +31,8 @@ const SQEdt=(el,option)=>{
     let sl = window.getSelection();
     if (e.keyCode === 8) {
       if (sl.isCollapsed) {
-        let para = getParent(sl.anchorNode, '.para');
-        if (para && para.innerHTML == '<br>' && e.keyCode === 8) {
+        let para = utils.getParent(sl.anchorNode, '.para');
+        if (para && para.innerHTML === '<br>' && e.keyCode === 8) {
           para.innerHTML = '<span style="font-size:16px;"><br></span>';
           sl.getRangeAt(0).selectNode(para.firstElementChild)
         }
@@ -42,8 +42,8 @@ const SQEdt=(el,option)=>{
 
   //add selectionchange to inform UI
   document.addEventListener('selectionchange', e => {
-    if (document.activeElement == el) { //judge the cursor in the el
-      let state = handleSelection(edt.sl).export();
+    if (document.activeElement === el) { //judge the cursor in the el
+      let state = selectEvent(window.getSelection());
       let same = utils.isEqual(edt.slState, state);
       if (!same) {
         edt.slState = state;
