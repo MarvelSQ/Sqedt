@@ -43,7 +43,7 @@ function changeTagState(id,el) {
   var key = codeMap[id]
   return function() {
     var btn = el;
-
+    slState[key]= !slState[]
   }
 }
 
