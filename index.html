@@ -166,8 +166,12 @@
       border-bottom: 1px solid #212121;
     }
 
-    .tool-input:focus{
+    .tool-btn,.tool-input:focus{
       outline: none;
+    }
+
+    .tool-btn:active{
+      color: #fff;
     }
 
     .sp.active,
@@ -246,37 +250,37 @@
     </div>
     <div id="edt-wrap" class="page">
       <div class="toolbar">
-        <span class="tool-group">
-          <button class="tool-btn sp" title="bold"><b>B</b></button>
-          <button class="tool-btn sp" title="italic"><i>I</i></button>
-          <button class="tool-btn sp" title="underline"><u>U</u></button>
-          <button class="tool-btn sp" title="deleteline"><del>D</del></button>
+        <span class="tool-group ctag">
+          <button class="tool-btn sp" title="bold" data-id="00"><b>B</b></button>
+          <button class="tool-btn sp" title="italic" data-id="01"><i>I</i></button>
+          <button class="tool-btn sp" title="underline" data-id="02"><u>U</u></button>
+          <button class="tool-btn sp" title="deleteline" data-id="03"><del>D</del></button>
         </span>
-        <span class="tool-group">
-          <button class="tool-btn color white" title="white">R</button>
-          <button class="tool-btn color black" title="black">R</button>
-          <button class="tool-btn color red" title="red">R</button>
-          <button class="tool-btn color yellow" title="yellow">R</button>
-          <button class="tool-btn color blue" title="blue">R</button>
-          <button class="tool-btn color green" title="green">R</button>
+        <span class="tool-group ccolor">
+          <button class="tool-btn color white" title="white" data-id="10">R</button>
+          <button class="tool-btn color black" title="black" data-id="11">R</button>
+          <button class="tool-btn color red" title="red" data-id="12">R</button>
+          <button class="tool-btn color yellow" title="yellow" data-id="13">R</button>
+          <button class="tool-btn color blue" title="blue" data-id="14">R</button>
+          <button class="tool-btn color green" title="green" data-id="15">R</button>
         </span>
-        <span class="tool-group">
-          <button class="tool-btn sp" title="Align Left"><b>|=  |</b></button>
-          <button class="tool-btn sp" title="Center Align"><b>| = |</b></button>
-          <button class="tool-btn sp" title="Align Right"><b>|  =|</b></button>
-          <button class="tool-btn sp" title="Justify Align"><b>|==|</b></button>
+        <span class="tool-group calign">
+          <button class="tool-btn sp" title="Align Left" data-id="20">|<b>=  </b>|</button>
+          <button class="tool-btn sp" title="Center Align" data-id="21">|<b> = </b>|</button>
+          <button class="tool-btn sp" title="Align Right" data-id="22">|<b>  =</b>|</button>
+          <button class="tool-btn sp" title="Justify Align" data-id="23">|<b>==</b>|</button>
         </span>
-        <span class="tool-group">
-          <button class="tool-btn sp" title="increase"><b>A+</b></button>
-          <button class="tool-btn sp" title="decrease"><b>A-</b></button>
-          <input class="tool-input">
+        <span class="tool-group csize">
+          <button class="tool-btn sp" title="increase" data-id="30"><b>A+</b></button>
+          <button class="tool-btn sp" title="decrease" data-id="31"><b>A-</b></button>
+          <input class="tool-input" data-id="32">
         </span>
       </div>
       <div id="edt"></div>
       <div class="subtool">
-        <span class="tool-group right">
+        <span class="tool-group">
           <label>textNum:</label>
-          <span>0</span>
+          <span id="text-num">0</span>
         </span>
       </div>
     </div>
