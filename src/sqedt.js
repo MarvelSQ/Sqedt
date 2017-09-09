@@ -56,17 +56,21 @@ const SQEdt = (el, option) => {
   //add selectionchange to inform UI
   document.addEventListener('selectionchange', e => {
     if (document.activeElement === el) { //judge the cursor in the el
-      let state = selectEvent(window.getSelection());
-      let same = utils.isEqual(edt.slState, state);
-      console.log(same);
-      console.log(state.toString());
-      console.log(edt.slState.toString());
-      if (!same) {
-        edt.slState = state;
-        edt.callbackInChange(state, e); //call the callback to subscriber
-      }
+      selectionChange();
     }
   })
+
+  function selectionChange(){
+    let state = selectEvent(window.getSelection());
+    let same = utils.isEqual(edt.slState, state);
+    console.log(same);
+    console.log(state.toString());
+    console.log(edt.slState.toString());
+    if (!same) {
+      edt.slState = state;
+      edt.callbackInChange(state); //call the callback to subscriber
+    }
+  }
 
   //cause of the function not fully prepared
   // el.addEventListener('copy', e => {
@@ -98,6 +102,7 @@ const SQEdt = (el, option) => {
           let para = utils.getParent(start, '.para')
           if (para.style.textAlign != 'left') {
             para.style.textAlign = 'left';
+            selectionChange();
           } else if (para.innerText != '') {
             let previous = para.previousElementSibling
             if (previous && previous.classList.contains('para')) {
