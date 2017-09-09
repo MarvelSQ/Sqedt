@@ -93,8 +93,9 @@ const SQEdt = (el, option) => {
       let sl = window.getSelection();
       if (sl.isCollapsed && sl.anchorOffset == 0) {
         let start = sl.anchorNode;
-        if (utils.isFirstInPara(sl.anchorNode)) {
-          let para = utils.getParent(sl.anchorNode, '.para')
+        console.log(start);
+        if (utils.isFirstInPara(start)) {
+          let para = utils.getParent(start, '.para')
           if (para.style.textAlign != 'left') {
             para.style.textAlign = 'left';
           } else if (para.innerText != '') {

@@ -22,9 +22,6 @@ function insertNode(state){
     let text = document.createTextNode('B')
     mid = utils.wrapParent('span',range.startContainer, text)
     parent = utils.getParent(range.startContainer, 'span')
-    // b.style.fontSize = '16px'
-    // b.innerHTML = '<b>B</b>'
-    // console.log(range.surroundContents());
   } else {
     mid = range.cloneContents();
     if (mid.querySelectorAll('.para').length > 0) {
