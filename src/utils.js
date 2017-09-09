@@ -297,6 +297,18 @@ function isFirst(el) {
   return el.parentNode.firstChild == el
 }
 
+function replaceElementIn(reg,node){
+  let newFrag = document.createDocumentFragment();
+  [...node.querySelectorAll(reg)].forEach(el=>{
+    [...el.childNodes].forEach(i=>{
+      newFrag.appendChild(i);
+    })
+    el.parentNode.insertBefore(newFrag,el);
+    el.remove();
+  })
+  node.normalize();
+}
+
 module.exports = {
   isAllElements,
   matchById,
@@ -313,5 +325,6 @@ module.exports = {
   getChildrenStyle,
   getParent,
   isFirstInPara,
-  isFirst
+  isFirst,
+  replaceElementIn
 }
