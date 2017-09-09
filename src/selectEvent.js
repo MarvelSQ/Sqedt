@@ -4,7 +4,7 @@ const State = require('./SelectState')
 const handleSelection = selection => {
   let state = new State();
   let range = selection.getRangeAt(0);
-  state.textNum = range.toString().length;
+  state.textNum = range.toString().replace('\n','').length;
   let fragment = range.cloneContents();
 
   let results = fragment.querySelectorAll('.para');
