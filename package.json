@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d lib&&webpack pac.js dist/bundle.js"
+    "build": "babel src -d lib&&webpack pac.js dist/bundle.js",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://marvelsq.github.io/Sqedt",
   "dependencies": {
-    "babel-preset-es2015": "^6.24.1"
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
   }
 }

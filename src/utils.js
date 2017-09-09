@@ -7,7 +7,7 @@
 const isAllElements = (type, el) => {
   if (el.innerText !== '') {
     let elc = el.cloneNode(true)
-    let array = elc.querySelectorAll(type)
+    let array = [...elc.querySelectorAll(type)]
     for (let cell of array) {
       cell.remove();
     }
@@ -196,28 +196,93 @@ const removeTagInPara = function(tag, collection) {
   // }
 }
 
-const isSame = function(obj, foo) {
+/**
+ * compare obj & foo is equal
+ * @param  {Object} obj [description]
+ * @param  {Object} foo [description]
+ * @return {Boolean}     [description]
+ */
+const isEqual = function(obj, foo) {
   let result = false;
-  let oarr,
-    farr;
-  oarr = Object.keys(obj).sort();
-  farr = Object.keys(foo).sort();
+  let oarr = Object.keys(obj).sort(),
+    farr = Object.keys(foo).sort();
   if (oarr.toString() == farr.toString()) {
     result = true;
-    for (let key of oarr) {
+    oarr.forEach(key => {
       if (typeof obj[key] == 'object') {
-        result = isSame(obj[key], foo[key]) && result;
+        result = isEqual(obj[key], foo[key]) && result;
       } else {
         result = (obj[key] == foo[key]) && result;
       }
-    }
+    })
     return result;
-  } else {
-    return false;
   }
+  return result;
 }
 
-module.exports= {
+/**
+ * wrap content with ele.parentNode til the div.para element.
+ * @param  {Node} ele     document's node
+ * @param  {Node} content node to be wraped
+ * @return {Node}         wrapedSpanElement or undefined
+ */
+const wrapParent = (reg, ele, content) => {
+  let [match,name] = judgeStart(reg);
+  let found = undefined;
+  let proxy = ele;
+  let tmp;
+  if (content) {
+    tmp = content;
+  } else {
+    tmp = ele.cloneNode(true);
+  }
+  while (!found) {
+    if (match(proxy, name)) {
+      found = proxy.cloneNode(false);
+      found.appendChild(tmp);
+    } else if (proxy.nodeName == "BODY") {
+      return;
+    } else {
+      if (proxy.nodeName != '#text') {
+        let tp = proxy.cloneNode(false);
+        tp.appendChild(tmp);
+        tmp = tp;
+      }
+      proxy = proxy.parentNode;
+    }
+  }
+  return found;
+}
+
+const getChildrenStyle = (type, el) => {
+  let spans = el.childNodes;
+  let arr = [];
+  if (spans && spans.length > 0) {
+    [...spans].forEach(c => {
+      arr.push(c.style[type])
+    })
+  }
+  return arr;
+}
+
+const getParent = (ele, reg) => {
+  let [match,
+    name] = judgeStart(reg)
+  let found = undefined;
+  let proxy = ele;
+  while (!found) {
+    if (match(proxy, name)) {
+      found = proxy;
+    } else if (proxy.nodeName == 'BODY') {
+      return;
+    } else {
+      proxy = proxy.parentNode
+    }
+  }
+  return found;
+}
+
+module.exports = {
   isAllElements,
   matchById,
   matchByTag,
@@ -228,5 +293,8 @@ module.exports= {
   removeTag,
   addTagInPara,
   removeTagInPara,
-  isSame
+  isEqual,
+  wrapParent,
+  getChildrenStyle,
+  getParent
 }
