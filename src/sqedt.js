@@ -64,19 +64,27 @@ const SQEdt=(el,option)=>{
   })
 
   //cause of the function not fully prepared
-  el.addEventListener('copy', e => {
-    e.returnValue = false;
-    return false;
-  })
+  // el.addEventListener('copy', e => {
+  //   e.returnValue = false;
+  //   return false;
+  // })
 
   el.addEventListener('paste', e => {
     e.returnValue = false;
     return false;
   })
 
-  el.addEventListener('cut', e => {
-    e.returnValue = false;
-    return false;
+  // el.addEventListener('cut', e => {
+  //   e.returnValue = false;
+  //   return false;
+  // })
+
+  el.addEventListener('keydown',e=>{
+    console.log(e);
+    //cmd+i||cmd+b
+    if(e.keyCode==73&&e.metaKey){
+      e.returnValue=false;
+    }
   })
 
   el.contentEditable =true;
