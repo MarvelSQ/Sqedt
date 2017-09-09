@@ -1,4 +1,6 @@
-function insertNode(){
+var utils = require('./utils')
+
+function insertNode(state){
   this.el.focus();
   let range = this.sl.getRangeAt(0);
   let parent;
@@ -18,8 +20,8 @@ function insertNode(){
   //prehandle
   if (range.collapsed) {
     let text = document.createTextNode('B')
-    mid = wrapParentSpan(range.startContainer, text)
-    parent = getParent(range.startContainer, 'span')
+    mid = utils.wrapParent('span',range.startContainer, text)
+    parent = utils.getParent(range.startContainer, 'span')
     // b.style.fontSize = '16px'
     // b.innerHTML = '<b>B</b>'
     // console.log(range.surroundContents());
@@ -37,16 +39,16 @@ function insertNode(){
       if (num >= 3) {
         type = 6;
       }
-      preParent = getParent(range.startContainer, '.para')
-      endParent = getParent(range.endContainer, '.para')
+      preParent = utils.getParent(range.startContainer, '.para')
+      endParent = utils.getParent(range.endContainer, '.para')
     } else if (mid.querySelectorAll('span').length > 0) {
       type = 2;
-      preParent = getParent(range.startContainer, 'span')
-      endParent = getParent(range.endContainer, 'span')
+      preParent = utils.getParent(range.startContainer, 'span')
+      endParent = utils.getParent(range.endContainer, 'span')
     } else {
       type = 1;
-      mid = wrapParentSpan(range.startContainer, mid)
-      parent = getParent(range.startContainer, 'span')
+      mid = utils.wrapParent('span',range.startContainer, mid)
+      parent = utils.getParent(range.startContainer, 'span')
     }
   }
 
@@ -55,17 +57,17 @@ function insertNode(){
     if (type == 0 || type == 1) {
       mid.innerHTML = `<b>${mid.innerHTML.replace('<b>', '').replace('</b>', '')}</b>`
     } else if (type == 2) {
-      util.addTag('b', mid.childNodes)
+      utils.addTag('b', mid.childNodes)
     } else if (type == 3) {
-      util.addTagInPara('b', mid.childNodes)
+      utils.addTagInPara('b', mid.childNodes)
     }
   } else {
     if (type == 0 || type == 1) {
       mid.innerHTML = mid.innerHTML.replace('<b>', '').replace('</b>', '')
     } else if (type == 2) {
-      util.removeTag('b', mid.childNodes)
+      utils.removeTag('b', mid.childNodes)
     } else if (type == 3) {
-      util.removeTagInPara('b', mid.childNodes)
+      utils.removeTagInPara('b', mid.childNodes)
     }
   }
 
@@ -77,7 +79,7 @@ function insertNode(){
     range.setStartBefore(preParent)
   }
   let fore = range.cloneContents();
-  util.removeEmpty(fore.children)
+  utils.removeEmpty(fore.children)
   range.deleteContents();
   if (type < 2) {
     range.setEndAfter(parent);
@@ -85,7 +87,7 @@ function insertNode(){
     range.setEndAfter(endParent)
   }
   let after = range.cloneContents();
-  util.removeEmpty(after.children)
+  utils.removeEmpty(after.children)
 
   range.deleteContents();
   console.log(after.children);
@@ -131,6 +133,19 @@ function insertNode(){
     ? end.childNodes.length
     : end.length
   this.sl.extend(end, offset)
+}
+
+
+function replace(reg,node){
+  let newFrag = document.createDocumentFragment();
+  [...node.querySelectorAll(reg)].forEach(el=>{
+    [...el.childNodes].forEach(i=>{
+      newFrag.appendChild(i);
+    })
+    el.parentNode.insertBefore(newFrag,el);
+    el.remove();
+  })
+  node.normalize();
 }
 
 module.exports = insertNode;
