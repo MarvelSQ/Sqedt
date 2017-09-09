@@ -5,7 +5,9 @@ var utils = require('./utils');
 var state = require('./SelectState')
 var selectEvent = require('./selectEvent')
 
-var DEFAULT_CONFIG = {};
+var DEFAULT_CONFIG = {
+  minLines:1,
+};
 
 function Edt(config) {
   this.el = config.el;
@@ -16,13 +18,13 @@ function Edt(config) {
   this.slState = new state().export();
 }
 
-Edt.prototype.addCallback = function(cb){
-  this.callbackInChange=cb;
+Edt.prototype.addCallback = function(cb) {
+  this.callbackInChange = cb;
 }
 
 const createInstance = config => new Edt(config);
 
-const SQEdt=(el,option)=>{
+const SQEdt = (el, option) => {
   if (!el) {
     throw new Error('element must be prepared!')
   }
@@ -42,9 +44,10 @@ const SQEdt=(el,option)=>{
           sl.getRangeAt(0).selectNode(para.firstElementChild)
         }
       }
-      if(el.innerHTML === ''){
+      if (el.innerHTML === '') {
         el.innerHTML = '<div class="para" style="text-align:left"><span style="font-size:16px;color:#212121"><br></span></div>'
       }
+
     }
   })
 
@@ -79,15 +82,67 @@ const SQEdt=(el,option)=>{
   //   return false;
   // })
 
-  el.addEventListener('keydown',e=>{
+  el.addEventListener('keydown', e => {
     console.log(e);
     //cmd+i||cmd+b
-    if(e.keyCode==73&&e.metaKey){
-      e.returnValue=false;
+    if (e.keyCode == 73 && e.metaKey) {
+      e.returnValue = false;
+    }
+    if (e.keyCode === 8) {
+      let sl = window.getSelection();
+      if (sl.isCollapsed) {
+        if (sl.anchorOffset == 0) {
+          let start = sl.anchorNode;
+          if (isFirstInPara(sl.anchorNode)) {
+            let para = utils.getParent(sl.anchorNode, '.para')
+            if (para.style.textAlign != 'left') {
+              para.style.textAlign = 'left';
+            } else {
+              if (para.innerText != '') {
+                let previous = para.previousElementSibling
+                if (previous && previous.classList.contains('para')) {
+                  if (previous.innerHTML == '<span style="font-size:16px;color:#212121"><br></span>') {
+                    previous.remove();
+                  } else {
+                    let frag = document.createDocumentFragment();
+                    [...para.childNodes].forEach(e => {
+                      frag.appendChild(e);
+                      console.log(frag);
+                    })
+                    previous.appendChild(frag);
+                    sl.collapse(start, 0);
+                    para.remove();
+                  }
+                }
+              } else {
+                para.remove();
+              }
+            }
+            e.returnValue = false;
+          }
+        }
+      }
     }
   })
 
-  el.contentEditable =true;
+  function isFirstInPara(el) {
+    let s = el;
+    if (!isFirst(el)) {
+      return false;
+    } else {
+      if (el.parentNode.classList.contains('para')) {
+        return true;
+      } else {
+        return isFirstInPara(el.parentNode)
+      }
+    }
+  }
+
+  function isFirst(el) {
+    return el.parentNode.firstChild == el
+  }
+
+  el.contentEditable = true;
 
   el.style.textAlign = 'left';
 
