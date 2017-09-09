@@ -1,10 +1,6 @@
 const utils = require('./utils')
 const State = require('./SelectState')
 
-function SelectEvent(selection) {
-  return handleSelection(selection).export();
-}
-
 const handleSelection = selection => {
   let state = new State();
   let range = selection.getRangeAt(0);
@@ -12,22 +8,22 @@ const handleSelection = selection => {
   let fragment = range.cloneContents();
 
   let results = fragment.querySelectorAll('.para');
-  let span_copy = {};
+  let spanCopy = {};
   if (results.length === 0) {
-    span_copy = utils.wrapParent('.para', range.commonAncestorContainer, fragment);
-    results = [span_copy]
+    spanCopy = utils.wrapParent('.para', range.commonAncestorContainer, fragment);
+    results = [spanCopy]
   }
 
   function colorRGB2Hex(color) {
     if (!color || color === '') {
       return undefined
     }
-    var rgb = color.split(',');
-    var r = parseInt(rgb[0].split('(')[1]);
-    var g = parseInt(rgb[1]);
-    var b = parseInt(rgb[2].split(')')[0]);
+    let rgb = color.split(',');
+    let r = parseInt(rgb[0].split('(')[1],10);
+    let g = parseInt(rgb[1],10);
+    let b = parseInt(rgb[2].split(')')[0],10);
 
-    var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    let hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
     return hex;
   }
 
@@ -78,6 +74,10 @@ const handleSelection = selection => {
   }
 
   return state;
+}
+
+function SelectEvent(selection) {
+  return handleSelection(selection).export();
 }
 
 module.exports = SelectEvent

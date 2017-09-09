@@ -60,7 +60,7 @@ function changeState(id, el) {
   if (id < 10) {
     return changeTagState(id, el);
   } else if (id < 20) {
-    colors[]
+    
     return changeColorState(id, el);
   } else if (id < 30) {
     justifys.push(el);

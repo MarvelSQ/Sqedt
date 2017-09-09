@@ -1,22 +1,23 @@
 'use strict';
+
 require('babel-polyfill')
 
 var utils = require('./utils');
 var InsertNode = require('./InsertNode');
-var state = require('./SelectState')
+var SelectState = require('./SelectState')
 var selectEvent = require('./selectEvent')
 
 var DEFAULT_CONFIG = {
-  minLines:1,
+  minLines: 1
 };
 
 function Edt(config) {
   this.el = config.el;
   this.sl = window.getSelection();
   this.callbackInChange = (s) => {
-    console.log('default callbackInChange');
+    console.log('default callbackInChange', s);
   };
-  this.slState = new state().export();
+  this.slState = new SelectState().export();
 }
 
 Edt.prototype.addCallback = function(cb) {
@@ -88,60 +89,38 @@ const SQEdt = (el, option) => {
     //cmd+i||cmd+b
     if (e.keyCode == 73 && e.metaKey) {
       e.returnValue = false;
-    }
-    if (e.keyCode === 8) {
+    } else if (e.keyCode === 8) {
       let sl = window.getSelection();
-      if (sl.isCollapsed) {
-        if (sl.anchorOffset == 0) {
-          let start = sl.anchorNode;
-          if (isFirstInPara(sl.anchorNode)) {
-            let para = utils.getParent(sl.anchorNode, '.para')
-            if (para.style.textAlign != 'left') {
-              para.style.textAlign = 'left';
-            } else {
-              if (para.innerText != '') {
-                let previous = para.previousElementSibling
-                if (previous && previous.classList.contains('para')) {
-                  if (previous.innerHTML == '<span style="font-size:16px;color:#212121"><br></span>') {
-                    previous.remove();
-                  } else {
-                    let frag = document.createDocumentFragment();
-                    [...para.childNodes].forEach(e => {
-                      frag.appendChild(e);
-                      console.log(frag);
-                    })
-                    previous.appendChild(frag);
-                    sl.collapse(start, 0);
-                    para.remove();
-                  }
-                }
+      if (sl.isCollapsed && sl.anchorOffset == 0) {
+        let start = sl.anchorNode;
+        if (utils.isFirstInPara(sl.anchorNode)) {
+          let para = utils.getParent(sl.anchorNode, '.para')
+          if (para.style.textAlign != 'left') {
+            para.style.textAlign = 'left';
+          } else if (para.innerText != '') {
+            let previous = para.previousElementSibling
+            if (previous && previous.classList.contains('para')) {
+              if (previous.innerHTML == '<span style="font-size:16px;color:#212121"><br></span>') {
+                previous.remove();
               } else {
+                let frag = document.createDocumentFragment();
+                [...para.childNodes].forEach(es => {
+                  frag.appendChild(es);
+                  console.log(frag);
+                })
+                previous.appendChild(frag);
+                sl.collapse(start, 0);
                 para.remove();
               }
             }
-            e.returnValue = false;
+          } else {
+            para.remove();
           }
         }
+        e.returnValue = false;
       }
     }
   })
-
-  function isFirstInPara(el) {
-    let s = el;
-    if (!isFirst(el)) {
-      return false;
-    } else {
-      if (el.parentNode.classList.contains('para')) {
-        return true;
-      } else {
-        return isFirstInPara(el.parentNode)
-      }
-    }
-  }
-
-  function isFirst(el) {
-    return el.parentNode.firstChild == el
-  }
 
   el.contentEditable = true;
 

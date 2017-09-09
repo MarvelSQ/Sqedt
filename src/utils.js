@@ -63,7 +63,6 @@ const matchByTag = (el, tag) => {
  */
 const judgeStart = reg => {
   let start = reg.charAt(0);
-  let match = undefined;
   switch (start) {
     case '#':
       return [matchById, reg.substr(1)];
@@ -138,7 +137,6 @@ const removeTag = function(tag, collection) {
     if (el.innerText === '') {
       removeList.push(el);
     } else {
-      console.log(el.innerHTML);
       el.innerHTML = el.innerHTML.replace(`<${tag}>`, '').replace(`</${tag}>`, '')
     }
   }
@@ -240,7 +238,7 @@ const wrapParent = (reg, ele, content) => {
     if (match(proxy, name)) {
       found = proxy.cloneNode(false);
       found.appendChild(tmp);
-    } else if (proxy.nodeName == "BODY") {
+    } else if (proxy.nodeName == 'BODY') {
       return;
     } else {
       if (proxy.nodeName != '#text') {
@@ -282,6 +280,23 @@ const getParent = (ele, reg) => {
   return found;
 }
 
+function isFirstInPara(el) {
+  let s = el;
+  if (!isFirst(el)) {
+    return false;
+  } else {
+    if (el.parentNode.classList.contains('para')) {
+      return true;
+    } else {
+      return isFirstInPara(el.parentNode)
+    }
+  }
+}
+
+function isFirst(el) {
+  return el.parentNode.firstChild == el
+}
+
 module.exports = {
   isAllElements,
   matchById,
@@ -296,5 +311,7 @@ module.exports = {
   isEqual,
   wrapParent,
   getChildrenStyle,
-  getParent
+  getParent,
+  isFirstInPara,
+  isFirst
 }
