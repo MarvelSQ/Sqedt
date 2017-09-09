@@ -32,6 +32,14 @@ edtor.addCallback(function(state) {
   } else {
     btnMap['03'].classList.remove('active');
   }
+  if(state.allColor){
+    var code = colorMap[state.colors[0].toUpperCase()];
+    if(code){
+
+      btnMap[code].classList.add('active')
+    }
+  }
+
   sizeInput.value = state.sizes[0]
   textNum.innerHTML = state.textNum==0?medt.innerText.length:state.textNum;
 })
@@ -42,14 +50,9 @@ var sizeInput = document.getElementsByClassName('tool-input')[0]
 
 var codeMap = {}
 
-var btnMap = {
-  '00': 'allB',
-  '01': 'allI',
-  '02': 'allU',
-  '03': 'allD'
-}
+var btnMap = {}
 
-var colors = []
+var colors = {}
 
 var justifys = []
 
@@ -57,7 +60,7 @@ function changeState(id, el) {
   if (id < 10) {
     return changeTagState(id, el);
   } else if (id < 20) {
-    colors.push(el);
+    colors[]
     return changeColorState(id, el);
   } else if (id < 30) {
     justifys.push(el);
@@ -116,10 +119,14 @@ arr.forEach(function(el, index) {
 console.log(btnMap);
 
 medt.innerHTML = '<div class="para" style="text-align:left"><span style="font-size:16px;color:#212121"><b>Hello World!</b></span></div>' +
-  '<div class="para" style="text-align:center"><span style="font-size:16px;color:#212121">Hello World!</span></div>' +
+  '<div class="para" style="text-align:center"><span style="font-size:16px;color:#23B6EA">Hello World!</span></div>' +
   '<div class="para" style="text-align:right"><span style="font-size:16px;color:#212121"><i>Hello World!</i></span></div>'+
-  '<div class="para" style="text-align:justify"><span style="font-size:16px;color:#212121"><u>Hello World!</u></span></div>';
+  '<div class="para" style="text-align:justify"><span style="font-size:16px;color:#E54343"><u>Hello World!</u></span></div>';
 
 console.log(edtor);
 
 textNum.innerHTML = medt.innerText.length
+
+medt.addEventListener('input',function(){
+  textNum.innerHTML = this.innerText.length;
+})
