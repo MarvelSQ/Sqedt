@@ -332,5 +332,20 @@
   }
   drwBack();
 </script>
-
+<script>
+  let s = document.createDocumentFragment();
+  let ei = document.createElement('span');
+  let newFrag = document.createDocumentFragment();
+  s.appendChild(ei);
+  ei.innerHTML = '<b>sasaa</b><i>asd<i>asd</i><u>Das</u>ads</i>';
+  [...s.querySelectorAll('i')].forEach(i=>{
+    console.log(i.innerHTML);
+    [...i.childNodes].forEach(c=>{
+      newFrag.appendChild(c)
+    });
+    console.log(i.parentNode)
+    i.parentNode.insertBefore(newFrag,i);
+    i.remove();
+  });
+</script>
 </html>
