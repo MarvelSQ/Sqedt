@@ -281,6 +281,11 @@ const getParent = (ele, reg) => {
 }
 
 function isFirstInPara(el) {
+  if(el.classList){
+    if(el.classList.contains('para')){
+      return true
+    }
+  }
   if (!isFirst(el)) {
     return false;
   } else {
@@ -293,6 +298,11 @@ function isFirstInPara(el) {
 }
 
 function isLastInPara(el){
+  if(el.classList){
+    if(el.classList.contains('para')){
+      return true
+    }
+  }
   if(!isLast(el)){
     return false;
   }else{
