@@ -10,7 +10,7 @@ function resetRange(range) {
         : range.startContainer.childNodes.length;
       if (length == range.startOffset) {
         if(utils.isLastInPara(range.startContainer)){
-          range.setStartBefore(utils.getParent(range.startContainer,'.para').nextElementSibling.childNodes[0])
+          range.setStart(utils.getParent(range.startContainer,'.para').nextElementSibling.childNodes[0],0)
         }
       }
       if (range.endOffset == 0) {
@@ -35,6 +35,7 @@ function insertNode(state) {
     endParent;
   let mid = undefined;
   let type = 0;
+
   /**
    * 0:inside span one element,
    * 1:inside span muti elements,
