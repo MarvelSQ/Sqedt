@@ -1,5 +1,23 @@
+
 var utils = require('./utils')
 
+
+function resetRange(range){
+  if(!range.collapsed){
+    if(range.toString().replace('\n','').length==0){
+      range.collapse(true);
+    }else{
+      [...range.cloneContents.childNodes]
+    }
+  }
+}
+
+
+/**
+ * this is tag add/remove method
+ * @param  {[type]} state [description]
+ * @return {[type]}       [description]
+ */
 function insertNode(state){
   this.el.focus();
   let range = this.sl.getRangeAt(0);
@@ -7,18 +25,24 @@ function insertNode(state){
   let preParent,
     endParent;
   let mid = undefined;
-  let type = 0; //0:inside span one element,
-  //1:inside span muti elements,
-  //2:muti span,
-  //3:muti div.para,
-  //4:muti div.para that has empty elements,
-  //5:muti div.para all of them are empty,
-  //6:muti div.para before and
+  let type = 0;
+
+  /**
+   * 0:inside span one element,
+   * 1:inside span muti elements,
+   * 2:muti span,
+   * 3:muti div.para,
+   * 4:muti div.para that has empty elements,
+   * 5:muti div.para all of them are empty,
+   * 6:muti div.para before and
+  **/
+
   let start,
     end;
 
   //prehandle
-  if (range.collapsed) {
+  if (range.collapsed||range.toString().replace('\n','').length===0) {
+    range.collapse(true);
     let text = document.createTextNode('B')
     mid = utils.wrapParent('span',range.startContainer, text)
     parent = utils.getParent(range.startContainer, 'span')
@@ -52,20 +76,40 @@ function insertNode(state){
   //inner handle
   if (state.allB) {
     if (type == 0 || type == 1) {
-      mid.innerHTML = `<b>${mid.innerHTML.replace('<b>', '').replace('</b>', '')}</b>`
+      // mid.innerHTML = `<b>${mid.innerHTML.replace('<b>', '').replace('</b>', '')}</b>`
+      utils.replaceElementIn('b',mid)
+      mid.innerHTML = `<b>${mid.innerHTML}</b>`
     } else if (type == 2) {
-      utils.addTag('b', mid.childNodes)
+      [...mid.querySelectorAll('span')].forEach(sp=>{
+        utils.replaceElementIn('b',sp);
+        sp.innerHTML = `<b>${sp.innerHTML}</b>`;
+        if(sp.innerText===''){
+          sp.remove();
+        }
+      })
+      // utils.addTag('b', mid.childNodes)
     } else if (type == 3) {
-      utils.addTagInPara('b', mid.childNodes)
+      // utils.replaceElementIn('b',mid)
+      // mid.innerHTML = `<b>${mid.innerHTML}</b>`
+      // utils.addTagInPara('b', mid.childNodes)
+      [...mid.querySelectorAll('span')].forEach(sp=>{
+        utils.replaceElementIn('b',sp);
+        sp.innerHTML = `<b>${sp.innerHTML}</b>`;
+        if(sp.innerText===''){
+          sp.remove();
+        }
+      })
     }
   } else {
-    if (type == 0 || type == 1) {
-      mid.innerHTML = mid.innerHTML.replace('<b>', '').replace('</b>', '')
-    } else if (type == 2) {
-      utils.removeTag('b', mid.childNodes)
-    } else if (type == 3) {
-      utils.removeTagInPara('b', mid.childNodes)
-    }
+    utils.replaceElementIn('b',mid);
+    // if (type == 0 || type == 1) {
+    //   // mid.innerHTML = mid.innerHTML.replace('<b>', '').replace('</b>', '')
+    //   utils.replaceElementIn('b',mid)
+    // } else if (type == 2) {
+    //   utils.removeTag('b', mid.childNodes)
+    // } else if (type == 3) {
+    //   utils.removeTagInPara('b', mid.childNodes)
+    // }
   }
 
   //selection handle
@@ -125,24 +169,13 @@ function insertNode(state){
   // }
   console.log(range.cloneContents());
   console.log(start);
-  this.sl.selectAllChildren(start)
+  this.sl.selectAllChildren(start);
   let offset = end.childNodes.length
     ? end.childNodes.length
     : end.length
-  this.sl.extend(end, offset)
-}
+  this.sl.extend(end, offset);
 
-
-function replace(reg,node){
-  let newFrag = document.createDocumentFragment();
-  [...node.querySelectorAll(reg)].forEach(el=>{
-    [...el.childNodes].forEach(i=>{
-      newFrag.appendChild(i);
-    })
-    el.parentNode.insertBefore(newFrag,el);
-    el.remove();
-  })
-  node.normalize();
+  return [];
 }
 
 module.exports = insertNode;
