@@ -15,7 +15,8 @@ function resetRange(range) {
       }
       if (range.endOffset == 0) {
         if(utils.isFirstInPara(range.endContainer)){
-          range.setEndAfter(utils.getParent(range.startContainer,'.para').previousElementSibling.childNodes[0])
+          let nodes = utils.getParent(range.endContainer,'.para').previousElementSibling.childNodes;
+          range.setEnd(nodes[nodes.length-1],nodes[nodes.length-1].childNodes.length);
         }
       }
     }
