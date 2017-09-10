@@ -281,7 +281,6 @@ const getParent = (ele, reg) => {
 }
 
 function isFirstInPara(el) {
-  let s = el;
   if (!isFirst(el)) {
     return false;
   } else {
@@ -293,8 +292,24 @@ function isFirstInPara(el) {
   }
 }
 
+function isLastInPara(el){
+  if(!isLast(el)){
+    return false;
+  }else{
+    if(el.parentNode.classList.contains('para')){
+      return true;
+    }else{
+      return isLastInPara(el)
+    }
+  }
+}
+
 function isFirst(el) {
   return el.parentNode.firstChild == el
+}
+
+function isLast(el){
+  return el.parentNode.lastChild == el
 }
 
 function replaceElementIn(reg,node){
