@@ -341,5 +341,7 @@ module.exports = {
   getParent,
   isFirstInPara,
   isFirst,
+  isLastInPara,
+  isLast,
   replaceElementIn
 }
