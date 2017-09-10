@@ -1,24 +1,33 @@
-
 var utils = require('./utils')
 
-
-function resetRange(range){
-  if(!range.collapsed){
-    if(range.toString().replace('\n','').length==0){
+function resetRange(range) {
+  if (!range.collapsed) {
+    if (range.toString().replace('\n', '').length == 0) {
       range.collapse(true);
-    }else{
-      [...range.cloneContents.childNodes]
+    } else {
+      let length = range.startContainer.nodeName == '#text'
+        ? range.startContainer.length
+        : range.startContainer.childNodes.length;
+      if (length == range.startOffset) {
+        if(utils.isLastInPara(range.startContainer)){
+          range.setStartBefore(utils.getParent(range.startContainer,'.para').nextElementSibling.childNodes[0])
+        }
+      }
+      if (range.endOffset == 0) {
+        if(utils.isFirstInPara(range.endContainer)){
+          range.setEndAfter(utils.getParent(range.startContainer,'.para').previousElementSibling.childNodes[0])
+        }
+      }
     }
   }
 }
-
 
 /**
  * this is tag add/remove method
  * @param  {[type]} state [description]
  * @return {[type]}       [description]
  */
-function insertNode(state){
+function insertNode(state) {
   this.el.focus();
   let range = this.sl.getRangeAt(0);
   let parent;
@@ -26,7 +35,6 @@ function insertNode(state){
     endParent;
   let mid = undefined;
   let type = 0;
-
   /**
    * 0:inside span one element,
    * 1:inside span muti elements,
@@ -37,14 +45,16 @@ function insertNode(state){
    * 6:muti div.para before and
   **/
 
+  resetRange(range);
+
   let start,
     end;
 
   //prehandle
-  if (range.collapsed||range.toString().replace('\n','').length===0) {
+  if (range.collapsed || range.toString().replace('\n', '').length === 0) {
     range.collapse(true);
     let text = document.createTextNode('B')
-    mid = utils.wrapParent('span',range.startContainer, text)
+    mid = utils.wrapParent('span', range.startContainer, text)
     parent = utils.getParent(range.startContainer, 'span')
   } else {
     mid = range.cloneContents();
@@ -68,7 +78,7 @@ function insertNode(state){
       endParent = utils.getParent(range.endContainer, 'span')
     } else {
       type = 1;
-      mid = utils.wrapParent('span',range.startContainer, mid)
+      mid = utils.wrapParent('span', range.startContainer, mid)
       parent = utils.getParent(range.startContainer, 'span')
     }
   }
@@ -77,13 +87,13 @@ function insertNode(state){
   if (state.allB) {
     if (type == 0 || type == 1) {
       // mid.innerHTML = `<b>${mid.innerHTML.replace('<b>', '').replace('</b>', '')}</b>`
-      utils.replaceElementIn('b',mid)
+      utils.replaceElementIn('b', mid)
       mid.innerHTML = `<b>${mid.innerHTML}</b>`
     } else if (type == 2) {
-      [...mid.querySelectorAll('span')].forEach(sp=>{
-        utils.replaceElementIn('b',sp);
+      [...mid.querySelectorAll('span')].forEach(sp => {
+        utils.replaceElementIn('b', sp);
         sp.innerHTML = `<b>${sp.innerHTML}</b>`;
-        if(sp.innerText===''){
+        if (sp.innerText === '') {
           sp.remove();
         }
       })
@@ -92,16 +102,16 @@ function insertNode(state){
       // utils.replaceElementIn('b',mid)
       // mid.innerHTML = `<b>${mid.innerHTML}</b>`
       // utils.addTagInPara('b', mid.childNodes)
-      [...mid.querySelectorAll('span')].forEach(sp=>{
-        utils.replaceElementIn('b',sp);
+      [...mid.querySelectorAll('span')].forEach(sp => {
+        utils.replaceElementIn('b', sp);
         sp.innerHTML = `<b>${sp.innerHTML}</b>`;
-        if(sp.innerText===''){
+        if (sp.innerText === '') {
           sp.remove();
         }
       })
     }
   } else {
-    utils.replaceElementIn('b',mid);
+    utils.replaceElementIn('b', mid);
     // if (type == 0 || type == 1) {
     //   // mid.innerHTML = mid.innerHTML.replace('<b>', '').replace('</b>', '')
     //   utils.replaceElementIn('b',mid)
