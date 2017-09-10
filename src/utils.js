@@ -299,7 +299,7 @@ function isLastInPara(el){
     if(el.parentNode.classList.contains('para')){
       return true;
     }else{
-      return isLastInPara(el)
+      return isLastInPara(el.parentNode)
     }
   }
 }
