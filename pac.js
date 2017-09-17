@@ -193,10 +193,30 @@ sizeInput.addEventListener('change', function(e) {
   }
 })
 
-medt.innerHTML = '<div class="para" style="text-align:left"><span style="font-size:16px;color:#212121"><b>Hello World!</b></span></div>' +
-  '<div class="para" style="text-align:center"><span style="font-size:20px;color:#23B6EA">Hello World!</span></div>' +
-  '<div class="para" style="text-align:right"><span style="font-size:24px;color:#40B883"><i>Hello World!</i></span></div>' +
-  '<div class="para" style="text-align:justify"><span style="font-size:12px;color:#E54343"><u>Hello World!</u></span></div>';
+function getContent(){
+  let htmlStr = ''
+  for(let i = 0;i<1000;i++){
+    htmlStr+=`<div class="para"><span style="color:#212121;font-size:36px;"><b>The MIT License (MIT)</b></span>
+    <span style="color:#888888;font-size:20px;"><i>Copyright (c) 2017-present <b>Qiang Sun</b></i></span>
+    <span style="color:#212121;font-size:16px;">Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files <b>(the "Software")</b>, to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span></div>`
+  }
+  return htmlStr;
+}
+
+
+medt.innerHTML = getContent();
 
 textNum.innerHTML = medt.innerText.length
 
