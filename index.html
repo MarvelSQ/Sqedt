@@ -104,11 +104,12 @@
       margin-top: 50px;
       margin-bottom: 5%;
       background-color: #fff;
-      box-shadow: 0 1px 3px #ccc;
+      box-shadow: 0 1px 10px #ccc;
       min-height: 200px;
       border-radius: 1px;
       padding: 16px;
       box-sizing: border-box;
+
     }
 
     #edt {
@@ -223,6 +224,26 @@
       background-color: #fff;
       color: #fff;
     }
+
+    .animation-wrap{
+      /*height: 100%;
+      overflow: scroll;*/
+      /*transform: matrix3d(0.190484, 0.0297263, 0, 8.9541e-05, 0.165615, 0.934315, 0, -3.098e-06, 0, 0, 1, 0, 179.079, 110.59, 0, 1);*/
+    }
+
+    .animation-wrap .page{
+      /*margin-top: 40%;*/
+    }
+
+    /*.animation-up{
+      animation: upward ease-in .5s 1;
+      animation-fill-mode: both;
+    }
+
+    @keyframes upward {
+      from {margin-top: 40%}
+      to {margin-top: 20%}
+    }*/
   </style>
   <style>
   .para{
@@ -246,9 +267,10 @@
       <div class="btn-group">
         <a class="btn round solid" href="https://github.com/MarvelSQ/Sqedt/">code</a>
         <a class="btn round border" href="https://github.com/MarvelSQ/Sqedt/issues">issue</a>
-        <a class="btn round solid" href="https://www.npmjs.com/package/sqedt">npmjs</a>
+        <a class="btn round solid" href="https://www.npmjs.com/package/sqedt">npm</a>
       </div>
     </div>
+    <div class="animation-wrap">
     <div id="edt-wrap" class="page">
       <div class="toolbar">
         <span class="tool-group ctag">
@@ -286,12 +308,22 @@
       </div>
     </div>
   </div>
+</div>
   <canvas id="shape"></canvas>
   <!-- built files will be auto injected -->
 </body>
 <script src="dist/bundle.js" async="true" defer></script>
 <script type="text/javascript">
+  let app = document.getElementById('app');
+  let edt = document.getElementById('edt-wrap');
+  app.addEventListener('scroll',function(e){
+    console.log('transform',edt.style.transform)
+    if(app.scrollTop>100){
+      edt.style.transform = 'translate(0px, '+(0-app.scrollTop+100)/10+'px)'
+    }
+  })
   document.addEventListener('touchmove', function(e) {
+    console.log(e)
     e.preventDefault()
   })
   var c = document.getElementsByTagName('canvas')[0],
