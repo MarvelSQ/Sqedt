@@ -61,8 +61,8 @@ function inlineStyle(el) {
 }
 
 function paraStyle(el) {
-  let {color, fontSize, lineHeight} = window.getComputedStyle(el);
-  return {color, fontSize, lineHeight} //,marginTop,marginLeft,marginRight,marginBottom,paddingTop,paddingLeft,paddingRight,paddingBottom};
+  let {color, fontSize, lineHeight, textAlign} = window.getComputedStyle(el);
+  return {color, fontSize, lineHeight, textAlign} //,marginTop,marginLeft,marginRight,marginBottom,paddingTop,paddingLeft,paddingRight,paddingBottom};
 }
 
 function judgeFont(el,collapsed) {
