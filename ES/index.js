@@ -31,7 +31,7 @@ const inlinelist = [
   'fontColor'
 ]
 
-const paralist = ['fontSize', 'lineHeight', 'color']
+const paralist = ['fontSize', 'lineHeight', 'color', 'textAlign']
 
 const DEFULT_CALLBACK = (...all)=>{
   console.log(all);
