@@ -94,18 +94,19 @@ function onDrop(e) {
   dragItem.to = e.target;
   if (e.dataTransfer.types.some(el => el === 'new')) {
     let value = e.dataTransfer.getData('new');
-    let div = document.createElement('div');
+    let temp = _template[value];
+    let div = document.createElement(temp.outer?temp.outer:'div');
     div.classList.add('para');
     div.classList.add(value);
-    div.innerHTML = _template[value].innerHTML;
-    if (value === 'img') {
-      div.setAttribute('contenteditable', false);
-      // if(dragItem.area<3){
-      //   let t = dragItem.to;
-      //   if(t.classList.contains('img')||t.previousElementSibling.classList.contains('img')){
-      //
-      //   }
-      // }
+    div.innerHTML = temp.innerHTML;
+    if(temp.rule){
+      temp.rule.forEach(e=>{
+        if(e.attr){
+          div.setAttribute(e.attr, e.value);
+        }
+      })
+    }
+    if(temp.callback){
       callback(div);
     }
     dragItem.drag = div;
@@ -115,7 +116,10 @@ function onDrop(e) {
 
 function init(el,template,cb) {
   if (bindstate) {
-    unbind();
+    if(element){
+      unbind();
+    }
+    bindstate = false;
   }
   _template = template
   element = el;
@@ -174,6 +178,7 @@ function bind() {
 }
 
 function unbind() {
+  if(bindstate){
   element.classList.remove('layout');
   element.removeEventListener('dragstart', onDragStart);
   // element.removeEventListener('dragenter',onDragEnter);
@@ -183,6 +188,7 @@ function unbind() {
   element.removeEventListener('drop', onDrop);
   [...element.children].forEach(e=>e.removeAttribute('draggable'));
   bindstate = false;
+  }
 }
 
 function bindCallback(fn){
