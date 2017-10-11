@@ -1,1 +1,1 @@
-module.exports=require('./lib/sqedt')
+module.exports=require('./lib')
