@@ -39,7 +39,7 @@ const DEFULT_CALLBACK = (...all)=>{
 
 class Edt {
 
-  constructor(element, {format,callback} = {format :false,callback :DEFULT_CALLBACK}) {
+  constructor(element, {format = false,callback = DEFULT_CALLBACK} = {}) {
     this.el = element;
     this.selection = undefined;
     this.rangeCopy = undefined;
@@ -98,7 +98,7 @@ class Edt {
 
   formatDoc() {
     console.log(this.format);
-    if (this.format) {
+    if (!this.format) {
       return;
     }
     let [result,
@@ -119,6 +119,7 @@ class Edt {
     this.status = 2;
     this.el.setAttribute('contenteditable', 'false');
     Drag.bind();
+    this.selection = undefined;
   }
 
   alertUI({type,value}) {
@@ -153,49 +154,53 @@ class Edt {
     if (this.status !== 1) {
       return
     }
+    if(!this.selection){
+      return
+    }
     console.log(level);
+    let _selection = this.selection;
     if (level === 0) {
       if (type < 6) {
         document.execCommand(inlinelist[type]);
       } else {
-        console.log(this.selection.type);
-        [...this.selection.origin.querySelectorAll('*')].forEach(e => {
+        console.log(_selection.type);
+        [..._selection.origin.querySelectorAll('*')].forEach(e => {
           e.style[inlinelist[type]] = '';
           if (e.nodeName === 'SPAN' && !e.style[0]) {
             util.replaceWidthChild(e);
           }
         })
-        if (this.selection.type === 0) {
+        if (_selection.type === 0) {
           let span = document.createElement('span');
           span.style[inlinelist[type]] = value;
-          span.appendChild(this.selection.origin);
-          this.selection.range.deleteContents();
-          this.selection.range.insertNode(span);
+          span.appendChild(_selection.origin);
+          _selection.range.deleteContents();
+          _selection.range.insertNode(span);
         } else {
-          [...this.selection.origin.children].forEach(para => {
+          [..._selection.origin.children].forEach(para => {
             para.innerHTML = `<span style="${util.camlToHypen(inlinelist[type])}:${value}"'>${para.innerHTML}</span>`
           })
-          this.selection.range.deleteContents();
-          let firstChild = this.selection.origin.firstChild.children[0];
-          let lastChild = this.selection.origin.lastChild.children[0];
-          this.selection.origin.firstChild.remove();
-          this.selection.origin.lastChild.remove();
-          this.selection.range.insertNode(this.selection.origin);
-          this.selection.select.startContainer.appendChild(firstChild);
-          this.selection.select.endContainer.insertBefore(lastChild, this.selection.select.endContainer.firstChild);
-          this.selection.range.setStart(firstChild, 0);
-          this.selection.range.setEnd(lastChild, lastChild.childNodes.length);
+          _selection.range.deleteContents();
+          let firstChild = _selection.origin.firstChild.children[0];
+          let lastChild = _selection.origin.lastChild.children[0];
+          _selection.origin.firstChild.remove();
+          _selection.origin.lastChild.remove();
+          _selection.range.insertNode(_selection.origin);
+          _selection.select.startContainer.appendChild(firstChild);
+          _selection.select.endContainer.insertBefore(lastChild, _selection.select.endContainer.firstChild);
+          _selection.range.setStart(firstChild, 0);
+          _selection.range.setEnd(lastChild, lastChild.childNodes.length);
         }
-        window.getSelection().addRange(this.selection.range);
+        window.getSelection().addRange(_selection.range);
       }
     } else if (level === 1) {
-      if (this.selection.type === 0) {
-        this.selection.parent.style[paralist[type]] = value;
+      if (_selection.type === 0) {
+        _selection.parent.style[paralist[type]] = value;
       } else {
-        this.selection.select.startContainer.style[paralist[type]] = value;
-        this.selection.select.endContainer.style[paralist[type]] = value;
-        let next = this.selection.select.startContainer.nextElementSibling;
-        while (next && next !== this.selection.select.endContainer) {
+        _selection.select.startContainer.style[paralist[type]] = value;
+        _selection.select.endContainer.style[paralist[type]] = value;
+        let next = _selection.select.startContainer.nextElementSibling;
+        while (next && next !== _selection.select.endContainer) {
           next.style[paralist[type]] = value;
           next = next.nextElementSibling;
         }
