@@ -26,6 +26,18 @@ function computeStyle(selection, el) {
       paras.push(paraStyle(next));
       next = next.nextElementSibling;
     }
+    para = paras.reduce((f,e,i,arr)=>{
+      f.color.push(e.color);
+      f.fontSize.push(e.fontSize);
+      f.lineHeight.push(e.lineHeight);
+      f.textAlign.push(e.textAlign);
+      if(i === arr.length-1){
+        for(let key in f){
+          f[key] = Array.from(new Set(f[key]));
+        }
+      }
+      return f;
+    },{color:[],fontSize:[],lineHeight:[],textAlign:[]});
   }
   if(selection.range.collapsed){
     inline = judgeFont(selection.wraped,true);
