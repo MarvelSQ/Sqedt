@@ -523,7 +523,7 @@ const inlinelist = [
   'fontColor'
 ]
 
-const paralist = ['fontSize', 'lineHeight', 'color']
+const paralist = ['fontSize', 'lineHeight', 'color', 'textAlign']
 
 const DEFULT_CALLBACK = (...all)=>{
   console.log(all);
@@ -776,8 +776,8 @@ function inlineStyle(el) {
 }
 
 function paraStyle(el) {
-  let {color, fontSize, lineHeight} = window.getComputedStyle(el);
-  return {color, fontSize, lineHeight} //,marginTop,marginLeft,marginRight,marginBottom,paddingTop,paddingLeft,paddingRight,paddingBottom};
+  let {color, fontSize, lineHeight, textAlign} = window.getComputedStyle(el);
+  return {color, fontSize, lineHeight, textAlign} //,marginTop,marginLeft,marginRight,marginBottom,paddingTop,paddingLeft,paddingRight,paddingBottom};
 }
 
 function judgeFont(el,collapsed) {
