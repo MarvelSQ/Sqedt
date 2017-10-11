@@ -1,0 +1,135 @@
+.edt-page {
+  overflow: auto;
+}
+
+.edt-page .para {
+  position: relative;
+  overflow: auto;
+}
+
+.edt-page.layout .para{
+  cursor: move;
+  user-select: element;
+  -webkit-user-select: element;
+}
+
+.para::before {
+  position: absolute;
+}
+
+.edt-page.layout .para::after{
+  content: '';
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.edt-page .para.img[position="1"]+.para,.edt-page .para.img[position="2"]+.para{
+  padding-left: 10px;
+}
+
+.edt-page .para.img[position="1"]+.para.img,.edt-page .para.img[position="2"]+.para.img{
+  padding-left: 0;
+}
+
+.edt-page .para.img[position="1"]+.para.img+.para,.edt-page .para.img[position="2"]+.para.img+.para{
+  width: 100%;
+}
+
+.edt-page .para.img[position="2"]{
+  float: right;
+  max-width: 50%;
+  padding-left: 10px;
+}
+
+.edt-page .para.img[position="1"]{
+  float: left;
+  max-width: 50%;
+}
+
+.para[drop="1"]::before, .para[drop="2"]::before {
+  content: '';
+  top: 0;
+  bottom: 0;
+  width: 25%;
+}
+
+.para[drop="3"]::before, .para[drop="4"]::before {
+  left:0;
+  content: '';
+  position: absolute;
+  margin-left: 25%;
+  margin-right: 25%;
+  width: 50%;
+  height: 0;
+  transition: height 2s;
+}
+
+.para[drop="1"]::before {
+  left: 0;
+  background: linear-gradient(to left, rgba(200, 200, 200, 0) 0%, rgba(156, 156, 156, 0.8) 100%);
+}
+
+.para[drop="2"]::before {
+  right: 0;
+  background: linear-gradient(to right, rgba(200, 200, 200, 0) 0%, rgba(156, 156, 156, 0.8) 100%);
+}
+
+.para[drop="3"]::before {
+  top: 0;
+  height: 25%;
+  background: linear-gradient(to top, rgba(200, 200, 200, 0) 0%, rgba(156, 156, 156, 0.8) 100%);
+}
+
+
+
+.para[drop="4"]::before {
+  bottom: 0;
+  height: 25%;
+  background: linear-gradient(to bottom, rgba(200, 200, 200, 0) 0%, rgba(156, 156, 156, 0.8) 100%);
+}
+
+.edt-page .para.h1{
+  font-size: 36px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.edt-page .para.h3{
+  font-size: 24px;
+}
+
+.edt-page .para.h3u{
+  font-size: 24px;
+  text-decoration: underline;
+}
+
+.edt-page .para.m{
+  padding-left: 20px;
+  padding-right: 20px;
+  font-style: italic;
+}
+
+.edt-page .para.q{
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #efefef;
+  border-radius: 10px;
+}
+
+.edt-page .para.c{
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #e0f2f1;
+  color:#004d40;
+}
+
+.edt-page .para.img{
+  text-align: center;
+}
+
+.edt-page .para img{
+  width: 100%;
+}

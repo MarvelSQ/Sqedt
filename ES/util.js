@@ -1,3 +1,10 @@
+//wrapParent
+//getParent
+//match{byClass,byTag,byId,byProp}
+//replace
+//addTag
+//removeTag
+
 /**
  * [isAllElements description]
  * @param  {[type]}  type [description]
@@ -6,11 +13,8 @@
  */
 const isAllElements = (type, el) => {
   if (el.innerText !== '') {
-    let elc = el.cloneNode(true)
-    let array = [...elc.querySelectorAll(type)]
-    for (let cell of array) {
-      cell.remove();
-    }
+    let elc = el.cloneNode(true);
+    [...elc.querySelectorAll(type)].forEach(e=>e.remove());
     return elc.innerText === ''
   } else {
     return false;
@@ -204,16 +208,15 @@ const isEqual = function(obj, foo) {
   let result = false;
   let oarr = Object.keys(obj).sort(),
     farr = Object.keys(foo).sort();
-  if (oarr.toString() == farr.toString()) {
+  if (oarr.toString() === farr.toString()) {
     result = true;
     oarr.forEach(key => {
-      if (typeof obj[key] == 'object') {
+      if (typeof obj[key] === 'object') {
         result = isEqual(obj[key], foo[key]) && result;
       } else {
-        result = (obj[key] == foo[key]) && result;
+        result = (obj[key] === foo[key]) && result;
       }
     })
-    return result;
   }
   return result;
 }
@@ -238,10 +241,10 @@ const wrapParent = (reg, ele, content) => {
     if (match(proxy, name)) {
       found = proxy.cloneNode(false);
       found.appendChild(tmp);
-    } else if (proxy.nodeName == 'BODY') {
+    } else if (proxy.nodeName === 'BODY') {
       return;
     } else {
-      if (proxy.nodeName != '#text') {
+      if (proxy.nodeName !== '#text') {
         let tp = proxy.cloneNode(false);
         tp.appendChild(tmp);
         tmp = tp;
@@ -271,7 +274,7 @@ const getParent = (ele, reg) => {
   while (!found) {
     if (match(proxy, name)) {
       found = proxy;
-    } else if (proxy.nodeName == 'BODY') {
+    } else if (proxy.nodeName === 'BODY') {
       return;
     } else {
       proxy = proxy.parentNode
@@ -315,11 +318,11 @@ function isLastInPara(el){
 }
 
 function isFirst(el) {
-  return el.parentNode.firstChild == el
+  return el.parentNode.firstChild === el
 }
 
 function isLast(el){
-  return el.parentNode.lastChild == el
+  return el.parentNode.lastChild === el
 }
 
 function replaceElementIn(reg,node){
@@ -334,24 +337,28 @@ function replaceElementIn(reg,node){
   node.normalize();
 }
 
-module.exports = {
-  isAllElements,
-  matchById,
-  matchByTag,
-  matchByClass,
-  judgeStart,
-  removeEmpty,
-  addTag,
-  removeTag,
-  addTagInPara,
-  removeTagInPara,
-  isEqual,
+function replaceWidthChild(element){
+  if(element.parentNode&&element.childNodes){
+    let newFrag = document.createDocumentFragment();
+    [...element.childNodes].forEach(e=>{
+      newFrag.appendChild(e);
+    })
+    element.parentNode.insertBefore(newFrag);
+    element.normalize();
+    element.remove();
+  }
+}
+
+function camlToHypen(str){
+  return str.replace(/([A-Z])/g, (word,i)=>{
+    return '-'+word.toLowerCase();
+  });
+}
+
+export default {
+  replaceElementIn,
+  replaceWidthChild,
   wrapParent,
-  getChildrenStyle,
   getParent,
-  isFirstInPara,
-  isFirst,
-  isLastInPara,
-  isLast,
-  replaceElementIn
+  camlToHypen,
 }
