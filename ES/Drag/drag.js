@@ -107,7 +107,7 @@ function onDrop(e) {
       })
     }
     if(temp.callback){
-      callback(div);
+      callback({type:value,el:div});
     }
     dragItem.drag = div;
     drop(dragItem.drag, dragItem.to, dragItem.area);
@@ -148,7 +148,7 @@ function init(el,template,cb) {
       range.insertNode(a);
       sl.removeAllRanges();
       sl.addRange(range);
-      callback(a);
+      callback({type:'a',el:a});
     } else if (e.dataTransfer.types.every(e => e !== 'new'||e!== 'move')) {
       // console.log(e);
       // let oRange = sl.getRangeAt(0);

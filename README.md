@@ -2,6 +2,8 @@
 
 this is my first Html Component
 
+current version 0.1.2
+
 Here is [Demo](https://marvelsq.github.io/Sqedt/) based on 0.0.5
 
 ### Function
@@ -43,7 +45,7 @@ more function will be added
 npm install sqedt
 ```
 
-use it in web project, like Vue.js/React.js
+use it in web project, like Vue.js/React.js, there are ES6 code in sqedt/ES.
 ```javascript
 import sqedt from 'sqedt'
 //or
@@ -110,7 +112,7 @@ type
 
 1 is selection status, value is { inline, para, full} style
 
-2 is template callback, value is element instance
+2 is template callback, value{ type, el } el is element instance
 ```javascript
 /**
  * @param {number}  type
@@ -119,8 +121,8 @@ type
 edtor.addCallback(({type,value})=>{
   if(type == 2){
     // img callback
-    if(value.classList.contains('img')){
-      let img = value.getElementsByTagName('img')[0];
+    if(value.type === 'img'){
+      let img = value.el.getElementsByTagName('img')[0];
       let newurl = prompt("input img url", img.src);
       img.src = newurl?newurl:img.src;
     }
