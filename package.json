@@ -1,12 +1,12 @@
 {
   "name": "sqedt",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "a html editor based on contentEditable",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ES -d lib&&webpack public/app.js dist/app.bundle.js",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",

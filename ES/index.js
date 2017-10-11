@@ -13,6 +13,7 @@
  * changeNode:{insertNewNode,changeTag,changeFont,changeJustify...}
  * drag & drop,
  */
+import 'babel-polyfill';
 import Status from './Status/status';
 import Drag from './Drag/drag';
 import handleSl from './HandleSelection/HandleSelection';
