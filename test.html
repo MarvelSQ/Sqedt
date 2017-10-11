@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>sqedt-home</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <style>
+  .editor{
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #888;
+  }
+  .editor img{
+    max-width: 100%;
+  }
+  .editor img:hover{
+    max-width: 100%;
+    cursor: nw-resize;
+    border: 4px solid #787878;
+    box-sizing: border-box;
+  }
+  .code-window{
+    position:relative;
+    overflow:scroll;
+  }
+  /*.code-window>*{
+    position: absolute;
+  }*/
+  .code{
+    left: 20px;
+    width: 90%;
+    line-height: 16px;
+    font-size: 16px;
+    height: 300px;
+    overflow-y:visible
+  }
+  .line-num{
+    width: 20px;
+    line-height: 16px;
+    color:#212121;
+    border: 1px solid transparent;
+    padding: 1px;
+  }
+  .bfc{
+
+  }
+  .bfc>div:first-child{
+    background-color: red;
+    float: left;
+    width: 100px;
+    height: 100px;
+  }
+  .bfc>div:last-child{
+    background-color: blue;
+    height: 200px;
+    overflow: scroll;
+  }
+  .bfc>div:nth-child(2){
+    background-color: red;
+    float: right;
+    width: 100px;
+    height: 100px;
+  }
+  </style>
+</head>
+<body>
+  <div class="bfc">
+    <div>
+    </div>
+    <div>
+    </div>
+    <div>
+    </div>
+  </div>
+  <div id="command"></div>
+  <div id="inputs"></div>
+  <div id="selects"></div>
+  <div id="imgs"></div>
+  <div contenteditable="true" class="editor">asssjss<br><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><div style="text-align: left;"><span>jhgjhgj</span></div></blockquote><div><ol><li>kjhkjkh<br></li><li>hjkjh</li></ol><ul><li>nkjkjh</li></ul>sssszxadsadddddddddddddddddddddddd<img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1506742225118&amp;di=54b3d9b8cc6cf27ed035d243f4863c9f&amp;imgtype=0&amp;src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201609%2F30%2F20160930224208_yZJQT.jpeg" style="width: 407px; vertical-align: top;">ddddddddddddddd dddddddddddddd</div><div>khjjhjhkjkj</div><div><ul><li>ssh<hr>hgjg</li></ul><hr>hgfgfhgfhgfhfh</div><div><font size="7">hgjhgjg</font><br><div>kjhjhkjh</div></div></div>
+  <pre class="code-window">
+      <!-- <div id="lines" class="line-num"></div> -->
+      <code id="code" class="code" disabled>
+      </code>
+  </pre>
+<script src="test.js"></script>
+</body>
+</html>
