@@ -7,7 +7,7 @@ let drags = document.getElementById('drags');
 let edt = new Edt(editor);
 
 edt.init();
-edt.addTemplate({value:'ul',innerHTML:'<ul><li>item 1</li><ul>'});
+edt.addTemplate({value:'ul',innerHTML:'<ul><li>item 1</li></ul>'});
 
 let {dragstart,dragend} = edt.getDragin();
 

@@ -167,7 +167,7 @@ class Edt {
         [..._selection.origin.querySelectorAll('*')].forEach(e => {
           e.style[inlinelist[type]] = '';
           if (e.nodeName === 'SPAN' && !e.style[0]) {
-            util.replaceWidthChild(e);
+            util.replaceWithChild(e);
           }
         })
         if (_selection.type === 0) {

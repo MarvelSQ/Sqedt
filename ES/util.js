@@ -337,7 +337,7 @@ function replaceElementIn(reg,node){
   node.normalize();
 }
 
-function replaceWidthChild(element){
+function replaceWithChild(element){
   if(element.parentNode&&element.childNodes){
     let newFrag = document.createDocumentFragment();
     [...element.childNodes].forEach(e=>{
@@ -357,7 +357,7 @@ function camlToHypen(str){
 
 export default {
   replaceElementIn,
-  replaceWidthChild,
+  replaceWithChild,
   wrapParent,
   getParent,
   camlToHypen,
