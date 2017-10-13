@@ -283,6 +283,23 @@ const getParent = (ele, reg) => {
   return found;
 }
 
+const getDirectSon = (ele,reg) =>{
+  let [match,
+    name] = judgeStart(reg)
+  let found = undefined;
+  let proxy = ele;
+  while (!found) {
+    if (match(proxy.parentNode, name)) {
+      found = proxy;
+    } else if (proxy.nodeName === 'BODY') {
+      return;
+    } else {
+      proxy = proxy.parentNode
+    }
+  }
+  return found;
+}
+
 function isFirstInPara(el) {
   if(el.classList){
     if(el.classList.contains('para')){
@@ -360,5 +377,6 @@ export default {
   replaceWidthChild,
   wrapParent,
   getParent,
+  getDirectSon,
   camlToHypen,
 }
