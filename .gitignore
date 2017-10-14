@@ -6,3 +6,4 @@ node_modules/
 test.js
 editor.html
 webpack.config.js
+.idea/
