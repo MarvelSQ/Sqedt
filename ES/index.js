@@ -161,6 +161,7 @@ class Edt {
     let _selection = this.selection;
     if (level === 0) {
       if (type < 6) {
+        this.el.focus();
         document.execCommand(inlinelist[type]);
       } else {
         console.log(_selection.type);
